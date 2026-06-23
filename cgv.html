@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conditions Générales de Vente — NurClips</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06060a;--gold:#D4B36A;--white:#F2EEE6;
+  --dim:rgba(242,238,230,0.68);--dim2:rgba(242,238,230,0.55);
+  --faint:rgba(242,238,230,0.10);--todo:rgba(212,179,106,0.12);
+}
+body{background:var(--bg);color:var(--white);font-family:'Syne',sans-serif;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+.nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 64px;background:rgba(6,6,10,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--faint);}
+.logo{font-size:17px;font-weight:800;color:var(--white);text-decoration:none;letter-spacing:-.2px;}
+.logo b{color:var(--gold);}
+.back{font-size:13px;font-weight:600;color:var(--dim);text-decoration:none;transition:color .2s;}
+.back:hover{color:var(--gold);}
+.wrap{max-width:760px;margin:0 auto;padding:80px 32px 120px;}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--gold);}
+h1{font-family:'Syne',sans-serif;font-size:clamp(36px,6vw,56px);font-weight:800;letter-spacing:-2px;line-height:1.05;margin-bottom:16px;}
+h1 i{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold);}
+.updated{font-size:13px;color:var(--dim2);margin-bottom:56px;}
+h2{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;letter-spacing:-.4px;margin:44px 0 14px;color:var(--white);}
+h2:first-of-type{margin-top:0;}
+p{color:var(--dim);margin-bottom:14px;}
+strong{color:var(--white);font-weight:600;}
+.todo{background:var(--todo);border:1px dashed rgba(212,179,106,0.4);border-radius:8px;padding:3px 10px;color:var(--gold);font-size:14px;font-weight:600;font-family:'Syne',sans-serif;display:inline-block;}
+.note{background:rgba(242,238,230,0.04);border:1px solid var(--faint);border-radius:12px;padding:20px 24px;margin:40px 0;font-size:14px;color:var(--dim2);line-height:1.65;}
+.note strong{color:var(--gold);}
+footer{border-top:1px solid var(--faint);padding:34px 64px;text-align:center;}
+.fcopy{font-size:11px;color:rgba(242,238,230,.25);}
+@media(max-width:700px){.nav{padding:16px 24px;}.wrap{padding:60px 24px 80px;}footer{padding:28px 24px;}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="logo">Nur<b>Clips</b></a>
+  <a href="index.html" class="back">← Retour au site</a>
+</nav>
+
+<div class="wrap">
+  <div class="eyebrow">Conditions contractuelles</div>
+  <h1>Conditions Générales <i>de Vente</i></h1>
+  <p class="updated">Dernière mise à jour : <span class="todo">[DATE]</span></p>
+
+  <div class="note">
+    <strong>⚠️ À faire valider par un professionnel.</strong> Cette trame couvre les points essentiels d'un service par abonnement, mais des CGV t'engagent juridiquement. Avant mise en ligne avec paiements actifs, fais-les relire par un avocat ou ton expert-comptable — notamment les clauses de résiliation et de responsabilité. Complète les champs <span class="todo">[ENTRE CROCHETS]</span>.
+  </div>
+
+  <h2>Article 1 — Objet</h2>
+  <p>Les présentes Conditions Générales de Vente (CGV) régissent les relations contractuelles entre <span class="todo">[NurClips / dénomination]</span>, ci-après « le Prestataire », et toute personne souscrivant à ses services, ci-après « le Client ». Toute souscription implique l'acceptation sans réserve des présentes CGV.</p>
+
+  <h2>Article 2 — Description des services</h2>
+  <p>NurClips propose un service de clipping vidéo : analyse du contenu long format du Client, montage de clips courts au format 9:16, ajout de sous-titres et publication sur les comptes TikTok du Client. Deux offres sont proposées :</p>
+  <p><strong>Émergence</strong> (200 €/mois) : 1 compte géré, 30 clips/mois, 1 publication par jour, sous-titres et hashtags inclus, rapport mensuel.<br>
+  <strong>Omniprésence</strong> (400 €/mois) : 3 comptes gérés, 2 clips/jour par compte, angles différenciés, rapport hebdomadaire, appel stratégie mensuel.</p>
+
+  <h2>Article 3 — Tarifs et paiement</h2>
+  <p>Les tarifs sont indiqués en euros, <span class="todo">[HT ou TTC — selon ton régime de TVA]</span>. Le paiement s'effectue par <span class="todo">[mode de paiement : prélèvement, carte via Stripe...]</span> de manière mensuelle. Le service est facturé d'avance pour la période d'abonnement.</p>
+
+  <h2>Article 4 — Durée et renouvellement</h2>
+  <p>L'abonnement est conclu pour une durée d'un mois, renouvelable par tacite reconduction. Aucun engagement de durée minimale n'est imposé.</p>
+
+  <h2>Article 5 — Résiliation</h2>
+  <p>Le Client peut résilier son abonnement à tout moment, avec effet à la fin de la période mensuelle en cours, en notifiant le Prestataire par <span class="todo">[email / espace client]</span>. Aucun remboursement au prorata n'est dû pour la période entamée, sauf disposition contraire.</p>
+
+  <h2>Article 6 — Obligations du Client</h2>
+  <p>Le Client garantit détenir les droits sur les contenus fournis ou désignés pour le clipping. Il fournit les accès nécessaires à la publication sur ses comptes. Le Client reste seul propriétaire de ses comptes et de son audience.</p>
+
+  <h2>Article 7 — Obligations du Prestataire</h2>
+  <p>Le Prestataire s'engage à livrer le volume de clips défini par l'offre souscrite, dans le respect de la ligne éditoriale du Client. Le Prestataire est tenu à une obligation de moyens, non de résultat quant aux performances d'audience.</p>
+
+  <h2>Article 8 — Propriété intellectuelle</h2>
+  <p>Les clips produits sont la propriété du Client une fois publiés. Le Prestataire conserve le droit de citer le Client comme référence, sauf opposition expresse de ce dernier.</p>
+
+  <h2>Article 9 — Responsabilité</h2>
+  <p>Le Prestataire ne saurait être tenu responsable des décisions des plateformes tierces (suspension de compte, modification d'algorithme) indépendantes de sa volonté.</p>
+
+  <h2>Article 10 — Données personnelles</h2>
+  <p>Le traitement des données personnelles est décrit dans la <a href="confidentialite.html" style="color:var(--gold);">politique de confidentialité</a>.</p>
+
+  <h2>Article 11 — Droit applicable et litiges</h2>
+  <p>Les présentes CGV sont soumises au droit français. En cas de litige, une solution amiable sera recherchée avant toute action judiciaire. À défaut, les tribunaux compétents seront ceux du ressort de <span class="todo">[ville du siège]</span>.</p>
+</div>
+
+<footer>
+  <span class="fcopy">© 2025 NurClips</span>
+</footer>
+</body>
+</html>

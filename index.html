@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NurClips — Éclaire ton audience</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+section[id],div[id]{scroll-margin-top:90px;}
+:root{
+  --bg:#06060a;
+  --bg2:#0b0b12;
+  --gold:#D4B36A;
+  --gold2:rgba(200,164,90,0.15);
+  --gold3:rgba(200,164,90,0.06);
+  --white:#F2EEE6;
+  --dim:rgba(242,238,230,0.68);
+  --dim2:rgba(242,238,230,0.55);
+  --faint:rgba(242,238,230,0.10);
+  --faint2:rgba(242,238,230,0.05);
+  --r:100px;
+  --r-sm:12px;
+  --r-md:20px;
+  --r-pill:100px;
+}
+body{
+  background:var(--bg);
+  color:var(--white);
+  font-family:'Syne',sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+  position:relative;
+}
+/* Ambient depth — soft vertical light gradient through whole page */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -5%, rgba(200,164,90,0.05), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 85% 30%, rgba(120,110,180,0.035), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 15% 70%, rgba(200,164,90,0.03), transparent 55%),
+    radial-gradient(ellipse 90% 60% at 50% 105%, rgba(200,164,90,0.06), transparent 60%);
+}
+/* Grain texture — subtle film grain over whole page */
+body::after{
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.4;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+}
+/* Faint stars over the whole page (behind content) */
+#sky-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.5;}
+::selection{background:rgba(200,164,90,0.25);color:var(--white);}
+
+/* ─── NAV ─── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 64px;
+  background:rgba(6,6,10,0.72);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--faint);
+}
+.logo{font-size:17px;font-weight:800;color:var(--white);text-decoration:none;letter-spacing:-.2px;transition:opacity .2s;}
+.logo b{color:var(--gold);font-weight:800;}
+.logo:hover{opacity:.8;}
+.nav-links{display:flex;align-items:center;gap:36px;}
+.nav-link{
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:600;
+  color:var(--dim);text-decoration:none;position:relative;
+  transition:color .2s;padding:2px 0;
+}
+.nav-link::after{
+  content:'';position:absolute;left:0;bottom:-2px;
+  width:0;height:1px;background:var(--gold);
+  transition:width .3s cubic-bezier(.22,1,.36,1);
+}
+.nav-link:hover{color:var(--white);}
+.nav-link:hover::after{width:100%;}
+.nav-btn{
+  background:var(--gold);color:#06060a;
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  padding:10px 24px;border-radius:var(--r-pill);text-decoration:none;
+  transition:opacity .2s,transform .2s,box-shadow .3s;
+  box-shadow:0 0 20px rgba(200,164,90,0.25);
+  position:relative;overflow:hidden;
+}
+.nav-btn:hover{opacity:.92;transform:translateY(-1px);box-shadow:0 0 28px rgba(200,164,90,0.4);}
+
+/* ─── HERO ─── */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:160px 40px 120px;
+  overflow:hidden;background:var(--bg);
+}
+#star-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+.hero-glow{
+  position:absolute;top:38%;left:50%;transform:translate(-50%,-50%);
+  width:900px;height:700px;
+  background:radial-gradient(ellipse,rgba(200,164,90,0.09) 0%,rgba(200,164,90,0.02) 45%,transparent 70%);
+  z-index:1;pointer-events:none;
+  animation:breathe 5s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1;}50%{transform:translate(-50%,-50%) scale(1.12);opacity:.7;}}
+.hero>*:not(#star-canvas):not(.hero-glow){position:relative;z-index:2;}
+.hero-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:40px;
+  padding:7px 18px;border:1px solid rgba(200,164,90,0.3);border-radius:var(--r-pill);
+  background:rgba(200,164,90,0.06);
+}
+.pill-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.15;}}
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(48px,7.5vw,92px);
+  font-weight:800;line-height:.95;letter-spacing:-2.5px;
+  color:var(--white);margin-bottom:20px;
+}
+.hero h1 i{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;font-weight:400;
+  color:var(--gold);letter-spacing:-0.5px;
+  text-shadow:0 0 40px rgba(212,179,106,0.3);
+}
+.hero-sub{
+  font-size:clamp(22px,3vw,34px);font-weight:600;letter-spacing:-0.8px;
+  color:var(--dim);margin-bottom:40px;
+}
+.hero-desc{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:19px;color:var(--dim);
+  max-width:460px;margin:0 auto 48px;line-height:1.7;
+}
+.hero-actions{display:flex;flex-direction:column;align-items:center;gap:14px;}
+.btn-main{
+  background:var(--gold);color:#06060a;
+  font-family:'Syne',sans-serif;font-size:16px;font-weight:700;
+  padding:18px 52px;border-radius:var(--r-pill);text-decoration:none;
+  border:none;cursor:pointer;display:inline-block;
+  box-shadow:0 0 40px rgba(200,164,90,.4),0 0 80px rgba(200,164,90,.15);
+  transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .3s;
+}
+.btn-main:hover{box-shadow:0 0 55px rgba(200,164,90,.55),0 0 110px rgba(200,164,90,.22);}
+.hero-note{font-size:12px;color:var(--dim);display:flex;align-items:center;gap:6px;}
+.hero-note::before{content:'✦';font-size:8px;color:var(--gold);}
+
+/* ─── TICKER ─── */
+.ticker{
+  position:relative;z-index:1;
+  overflow:hidden;
+  border-top:1px solid var(--faint);border-bottom:1px solid var(--faint);
+  padding:14px 0;background:rgba(6,6,10,0.5);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+}
+.ticker-track{display:flex;gap:52px;animation:tick 20s linear infinite;width:max-content;}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.t{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);display:inline-flex;align-items:center;gap:18px;white-space:nowrap;}
+.tgem{color:var(--gold);font-size:7px;}
+
+/* ─── STATS ─── */
+.stats{
+  position:relative;z-index:1;
+  background:linear-gradient(180deg, rgba(11,11,18,0) 0%, rgba(11,11,18,0.6) 50%, rgba(11,11,18,0) 100%);
+  border-top:1px solid var(--faint);
+  border-bottom:1px solid var(--faint);
+}
+.stats-inner{
+  max-width:1100px;margin:0 auto;padding:80px 60px;
+  display:grid;grid-template-columns:repeat(4,1fr);
+}
+.stat{text-align:center;padding:0 20px;border-right:1px solid var(--faint);}
+.stat:last-child{border-right:none;}
+.stat-n{
+  font-size:clamp(44px,4.5vw,62px);font-weight:800;letter-spacing:-2px;
+  color:var(--gold);line-height:1;margin-bottom:10px;
+  transition:color .3s;
+  text-shadow:0 0 30px rgba(212,179,106,0.18);
+  animation:statglow 4s ease-in-out infinite;
+}
+@keyframes statglow{0%,100%{text-shadow:0 0 30px rgba(212,179,106,0.15);}50%{text-shadow:0 0 42px rgba(212,179,106,0.32);}}
+.stat-l{font-size:13px;color:var(--dim2);line-height:1.55;}
+
+/* ─── SECTION BASE ─── */
+.s{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:110px 60px;}
+.s-tight{padding-top:80px;padding-bottom:80px;}
+.s-air{padding-top:160px;padding-bottom:160px;}
+.s-wide{max-width:1280px;}
+.s-narrow{max-width:880px;}
+.sdiv{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 60px;}
+.rule{border:none;height:1px;background:linear-gradient(90deg, transparent, var(--faint) 20%, var(--faint) 80%, transparent);}
+.stag{
+  font-family:'Syne',sans-serif;
+  font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:28px;
+  display:flex;align-items:center;gap:14px;
+}
+.stag::before{content:'';width:24px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);}
+.stag::after{content:'✦';font-size:8px;color:var(--gold);opacity:0.6;}
+h2{
+  font-size:clamp(32px,4vw,52px);font-weight:800;
+  letter-spacing:-1.5px;line-height:1.04;color:var(--white);margin-bottom:20px;
+}
+h2 i{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold);letter-spacing:-0.5px;text-shadow:0 0 30px rgba(212,179,106,0.22);}
+
+/* ─── PROBLEM ─── */
+.problem-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:72px;align-items:start;}
+.problem-head{position:sticky;top:120px;}
+.problem-intro{font-size:15px;color:var(--dim2);line-height:1.7;margin-top:18px;max-width:300px;}
+.pain-list{margin-top:0;display:flex;flex-direction:column;}
+.pain-item{
+  display:grid;grid-template-columns:44px 1fr 32px;
+  align-items:center;gap:24px;padding:28px 0;
+  border-bottom:1px solid var(--faint);
+  cursor:default;transition:border-color .3s;
+}
+.pain-item:first-child{border-top:1px solid var(--faint);}
+.pain-item:hover{border-color:rgba(200,164,90,.3);}
+.pain-item:hover .pain-n{opacity:1;color:var(--gold);}
+.pain-item:hover .pain-arr{color:var(--gold);transform:rotate(-45deg) translate(3px,-3px);}
+.pain-item:hover .pain-bar{width:100%;}
+.pain-n{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--dim);transition:all .3s;}
+.pain-body{}
+.pain-txt{font-family:'Instrument Serif',serif;font-style:italic;font-size:17px;color:var(--dim);line-height:1.6;transition:color .3s;}
+.pain-item:hover .pain-txt{color:var(--white);}
+.pain-txt strong{color:var(--white);font-style:normal;}
+.pain-bar-wrap{height:1px;background:transparent;margin-top:0;overflow:hidden;}
+.pain-bar{height:1px;background:var(--gold);width:0;transition:width .6s ease;}
+.pain-arr{font-size:18px;color:var(--faint);transform:rotate(-45deg);transition:all .3s;}
+
+.answer{
+  margin-top:60px;padding:52px 56px;
+  border:1px solid rgba(200,164,90,.18);border-radius:var(--r-md);
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(200,164,90,.04) 0%,transparent 60%);
+}
+.answer::before{
+  content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);
+  width:360px;height:240px;
+  background:radial-gradient(circle,rgba(200,164,90,.1) 0%,transparent 70%);
+}
+.answer-txt{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:clamp(19px,2.4vw,27px);line-height:1.55;
+  color:var(--white);text-align:center;position:relative;z-index:1;
+}
+.answer-txt strong{font-style:normal;color:var(--gold);}
+
+/* ─── HOW — timeline ─── */
+.how-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:72px;align-items:start;}
+.how-head{position:sticky;top:120px;}
+.how-intro{font-size:15px;color:var(--dim2);line-height:1.7;margin-top:18px;max-width:300px;}
+.timeline{margin-top:8px;position:relative;padding-left:60px;}
+.timeline::before{
+  content:'';position:absolute;left:13px;top:8px;bottom:8px;
+  width:1px;background:var(--faint);
+}
+.tl-line{
+  position:absolute;left:13px;top:8px;width:1px;height:0;
+  background:var(--gold);transition:height 1s ease;
+  box-shadow:0 0 8px rgba(200,164,90,.5);
+}
+.tl-step{position:relative;padding-bottom:56px;}
+.tl-step:last-child{padding-bottom:0;}
+.tl-dot{
+  position:absolute;left:-54px;top:6px;
+  width:12px;height:12px;border-radius:50%;
+  border:1.5px solid var(--faint);background:var(--bg);
+  transition:border-color .4s,background .4s,box-shadow .4s;
+}
+.tl-step.lit .tl-dot{
+  border-color:var(--gold);background:var(--gold);
+  box-shadow:0 0 10px rgba(200,164,90,.6);
+}
+.tl-lbl{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);opacity:.6;margin-bottom:10px;}
+.tl-title{font-size:22px;font-weight:700;letter-spacing:-.4px;color:var(--white);margin-bottom:10px;line-height:1.2;}
+.tl-desc{font-size:15.5px;color:var(--dim);line-height:1.7;max-width:500px;}
+
+/* ─── PRICING ─── */
+.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:64px;}
+.pc{
+  border:1px solid var(--faint);border-radius:var(--r-md);
+  padding:44px 40px;position:relative;overflow:hidden;
+  transition:border-color .3s;cursor:default;
+}
+.pc::after{
+  content:'';position:absolute;
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,164,90,.12) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+  opacity:0;transition:opacity .3s;
+  transform:translate(-50%,-50%);
+  left:var(--mx,50%);top:var(--my,50%);
+}
+.pc:hover::after{opacity:1;}
+.pc>*{position:relative;z-index:1;}
+.pc.glow{
+  border-color:rgba(200,164,90,.35);
+  background:
+    radial-gradient(ellipse at top,rgba(200,164,90,.1) 0%,transparent 55%),
+    linear-gradient(180deg, rgba(200,164,90,0.03), transparent);
+  box-shadow:0 0 0 1px rgba(200,164,90,0.1), 0 30px 80px -30px rgba(200,164,90,0.25);
+}
+.pc-plan{
+  font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:28px;
+  display:flex;align-items:center;gap:8px;
+}
+.pc-plan::before{content:'';width:14px;height:1px;background:var(--gold);}
+.pc-amt{
+  font-family:'Syne',sans-serif;
+  font-size:72px;font-weight:800;letter-spacing:-4px;
+  color:var(--white);line-height:1;margin-bottom:4px;
+  display:flex;align-items:flex-start;gap:3px;
+}
+.pc-amt sup{font-size:28px;font-weight:700;margin-top:12px;color:var(--dim);}
+.pc-per{font-size:13.5px;color:var(--dim2);margin-bottom:24px;padding-bottom:22px;border-bottom:1px solid var(--faint);}
+.pc-tag{font-family:'Instrument Serif',serif;font-style:italic;font-size:16px;color:var(--dim);margin-bottom:24px;line-height:1.5;}
+.fl{list-style:none;margin-bottom:32px;}
+.fl li{font-size:14.5px;color:var(--dim);padding:11px 0;border-bottom:1px solid var(--faint);display:flex;gap:10px;align-items:flex-start;line-height:1.45;}
+.fl li:last-child{border-bottom:none;}
+.fl li::before{content:'✦';font-size:8px;color:var(--gold);flex-shrink:0;margin-top:4px;}
+.fl li strong{color:var(--white);font-weight:600;}
+.pbtn{
+  display:block;width:100%;text-align:center;text-decoration:none;
+  font-family:'Syne',sans-serif;font-size:14px;font-weight:700;
+  padding:15px;border-radius:var(--r-pill);border:none;cursor:pointer;
+  transition:opacity .2s,transform .15s;
+}
+.pbtn:hover{opacity:.85;transform:translateY(-1px);}
+.pbtn-dim{background:var(--faint);color:var(--white);}
+.pbtn-gold{background:var(--gold);color:#06060a;box-shadow:0 0 28px rgba(200,164,90,.28);}
+
+/* ─── FAQ — accordion ─── */
+.faq-list{margin-top:60px;max-width:720px;}
+.faq-item{border-bottom:1px solid var(--faint);overflow:hidden;}
+.faq-item:first-child{border-top:1px solid var(--faint);}
+.faq-btn{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  padding:22px 0;background:none;border:none;cursor:pointer;
+  text-align:left;gap:16px;
+}
+.faq-q{font-size:15px;font-weight:700;color:var(--white);line-height:1.3;letter-spacing:-.2px;}
+.faq-icon{
+  width:22px;height:22px;border-radius:50%;
+  border:1px solid var(--faint);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:var(--dim);
+  transition:transform .35s,border-color .25s,color .25s;
+}
+.faq-item.open .faq-icon{transform:rotate(45deg);border-color:var(--gold);color:var(--gold);}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(.4,0,.2,1);}
+.faq-a{font-size:15px;color:var(--dim);line-height:1.75;padding-bottom:20px;}
+
+/* ─── FOUNDER / STORY ─── */
+.founder{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;padding:110px 60px;
+}
+.founder-inner{
+  display:grid;grid-template-columns:0.85fr 1.15fr;gap:64px;align-items:center;
+}
+.founder-visual{
+  position:relative;
+  aspect-ratio:4/5;
+  border-radius:var(--r-md);
+  border:1px solid var(--faint);
+  overflow:hidden;
+  background:linear-gradient(160deg, rgba(212,179,106,0.08), rgba(11,11,18,0.4));
+  display:flex;align-items:flex-end;
+}
+.founder-portrait{position:absolute;inset:0;width:100%;height:100%;z-index:0;object-fit:cover;object-position:center 30%;}
+.founder-glow{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 40% at 50% 12%, rgba(212,179,106,0.12), transparent 70%),
+    linear-gradient(180deg, rgba(6,6,10,0.15) 0%, transparent 30%, rgba(6,6,10,0.25) 100%);
+  pointer-events:none;z-index:1;mix-blend-mode:soft-light;
+}
+.founder-caption{
+  position:relative;z-index:2;width:100%;
+  padding:24px;
+  background:linear-gradient(0deg, rgba(6,6,10,0.92), transparent);
+}
+.founder-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--white);letter-spacing:-.3px;}
+.founder-role{font-size:13px;color:var(--gold);margin-top:2px;}
+.founder-quote{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:clamp(24px,3vw,34px);line-height:1.35;
+  color:var(--white);margin-bottom:28px;letter-spacing:-.3px;
+}
+.founder-quote .hl{color:var(--gold);text-shadow:0 0 30px rgba(212,179,106,0.25);}
+.founder-body{font-size:16px;color:var(--dim);line-height:1.75;margin-bottom:18px;}
+.founder-body:last-of-type{margin-bottom:0;}
+.founder-body strong{color:var(--white);font-weight:600;}
+.founder-sign{
+  display:flex;align-items:center;gap:14px;margin-top:32px;
+  padding-top:28px;border-top:1px solid var(--faint);
+}
+.founder-sign-mark{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:26px;color:var(--gold);
+}
+.founder-sign-text{font-size:13px;color:var(--dim2);line-height:1.4;}
+.founder-sign-text b{color:var(--white);font-weight:600;display:block;font-family:'Syne',sans-serif;font-size:14px;}
+
+/* ─── PROCESS / COLLAB ─── */
+.process-steps{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:64px;
+  position:relative;
+}
+.process-line{
+  position:absolute;top:22px;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--faint) 8%,var(--faint) 92%,transparent);
+  z-index:0;
+}
+.proc{position:relative;z-index:1;padding:0 14px;text-align:center;}
+.proc-num{
+  width:46px;height:46px;border-radius:50%;
+  background:var(--bg);border:1px solid var(--faint);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 22px;
+  font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--gold);
+  transition:border-color .4s,box-shadow .4s,background .4s;
+}
+.proc.lit .proc-num{
+  border-color:var(--gold);background:rgba(212,179,106,0.08);
+  box-shadow:0 0 18px rgba(212,179,106,0.3);
+}
+.proc-ico{font-size:22px;margin-bottom:10px;display:block;line-height:1;}
+.proc-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.25;letter-spacing:-.2px;}
+.proc-desc{font-size:13px;color:var(--dim);line-height:1.6;}
+
+/* ─── MODAL FORM ─── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(4,4,7,0.82);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s;
+}
+.modal-overlay.open{opacity:1;visibility:visible;}
+.modal{
+  position:relative;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;
+  background:linear-gradient(180deg,#0e0e16,#08080d);
+  border:1px solid rgba(212,179,106,0.2);border-radius:var(--r-md);
+  padding:40px;
+  box-shadow:0 40px 100px -20px rgba(0,0,0,0.7),0 0 60px -20px rgba(212,179,106,0.2);
+  transform:translateY(20px) scale(0.98);transition:transform .4s cubic-bezier(.22,1,.36,1);
+  scrollbar-width:thin;
+}
+.modal-overlay.open .modal{transform:none;}
+.modal::-webkit-scrollbar{width:6px;}
+.modal::-webkit-scrollbar-thumb{background:var(--faint);border-radius:10px;}
+.modal-glow{position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:240px;height:160px;background:radial-gradient(circle,rgba(212,179,106,0.14),transparent 70%);pointer-events:none;}
+.modal-close{
+  position:absolute;top:18px;right:18px;
+  width:32px;height:32px;border-radius:50%;
+  background:var(--faint2);border:1px solid var(--faint);color:var(--dim);
+  font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s,transform .2s;z-index:2;
+}
+.modal-close:hover{background:var(--faint);color:var(--white);transform:rotate(90deg);}
+.modal-eyebrow{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px;position:relative;z-index:1;}
+.modal-eyebrow::before{content:'';width:18px;height:1px;background:var(--gold);}
+.modal-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-1px;color:var(--white);line-height:1.05;margin-bottom:8px;position:relative;z-index:1;}
+.modal-title i{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold);}
+.modal-sub{font-size:14px;color:var(--dim);line-height:1.6;margin-bottom:28px;position:relative;z-index:1;}
+.field{margin-bottom:16px;position:relative;z-index:1;}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--dim);margin-bottom:7px;letter-spacing:.02em;}
+.field label .req{color:var(--gold);}
+.field input,.field textarea,.field select{
+  width:100%;background:var(--faint2);border:1px solid var(--faint);
+  border-radius:10px;padding:12px 14px;
+  color:var(--white);font-family:'Syne',sans-serif;font-size:14px;
+  transition:border-color .2s,background .2s;
+}
+.field input::placeholder,.field textarea::placeholder{color:rgba(242,238,230,0.3);}
+.field input:focus,.field textarea:focus,.field select:focus{
+  outline:none;border-color:rgba(212,179,106,0.5);background:rgba(212,179,106,0.04);
+}
+.field textarea{resize:vertical;min-height:80px;line-height:1.5;}
+.field select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23D4B36A' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+.field select option{background:#0e0e16;color:var(--white);}
+.modal-submit{
+  width:100%;margin-top:8px;
+  background:var(--gold);color:#06060a;
+  font-family:'Syne',sans-serif;font-size:15px;font-weight:700;
+  padding:15px;border-radius:var(--r-pill);border:none;cursor:pointer;
+  box-shadow:0 0 28px rgba(212,179,106,0.3);
+  transition:opacity .2s,transform .15s,box-shadow .3s;position:relative;z-index:1;
+}
+.modal-submit:hover{opacity:.92;transform:translateY(-1px);box-shadow:0 0 40px rgba(212,179,106,0.45);}
+.modal-note{font-size:11px;color:var(--dim2);text-align:center;margin-top:14px;position:relative;z-index:1;}
+.modal-success{text-align:center;padding:20px 0;position:relative;z-index:1;display:none;}
+.modal-success.show{display:block;}
+.modal-success-icon{font-size:40px;color:var(--gold);margin-bottom:16px;}
+.modal-success h3{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--white);margin-bottom:10px;letter-spacing:-.5px;}
+.modal-success p{font-size:14px;color:var(--dim);line-height:1.6;}
+.modal-form.hide{display:none;}
+
+/* ─── FINAL CTA ─── */
+.cta-final{
+  position:relative;z-index:1;
+  text-align:center;padding:140px 60px;overflow:hidden;
+}
+.cta-halo{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:800px;height:600px;
+  background:radial-gradient(ellipse,rgba(200,164,90,.1) 0%,transparent 68%);
+  pointer-events:none;animation:breathe 6s ease-in-out infinite;
+}
+.cta-inner{position:relative;z-index:1;max-width:680px;margin:0 auto;}
+.cta-final h2{font-size:clamp(38px,5vw,64px);}
+.cta-sub{font-family:'Instrument Serif',serif;font-style:italic;font-size:19px;color:var(--dim);margin:22px auto 52px;max-width:420px;line-height:1.6;}
+.guarantee{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;color:var(--dim);margin-top:20px;
+  padding:10px 22px;border:1px solid var(--faint);border-radius:var(--r-pill);
+}
+.guarantee strong{color:var(--gold);}
+
+/* ─── SCROLL REVEAL ─── */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1);}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  *{animation:none!important;}
+}
+
+/* ─── FOOTER ─── */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--faint);padding:34px 64px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+.flogo{font-size:16px;font-weight:800;color:var(--dim);text-decoration:none;}
+.flogo b{color:var(--gold);}
+.footer-legal{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.footer-legal a{font-size:12px;color:var(--dim2);text-decoration:none;transition:color .2s;}
+.footer-legal a:hover{color:var(--gold);}
+.fcopy{font-size:11px;color:rgba(237,232,223,.2);}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:860px){
+  .nav{padding:16px 24px;}
+  .nav-links{display:none;}
+  .hero{padding:120px 24px 80px;}
+  .s{padding:80px 24px;}
+  .s-air{padding-top:90px;padding-bottom:90px;}
+  .problem-grid,.how-grid{grid-template-columns:1fr;gap:40px;}
+  .process-steps{grid-template-columns:1fr;gap:32px;}
+  .process-line{display:none;}
+  .proc{display:grid;grid-template-columns:46px 1fr;gap:18px;text-align:left;align-items:start;}
+  .proc-num{margin:0;}
+  .proc-ico{display:none;}
+  .problem-head,.how-head{position:static;}
+  .problem-intro,.how-intro{max-width:100%;}
+  .sdiv{padding-left:24px;padding-right:24px;}
+  .stats-inner{grid-template-columns:1fr 1fr;gap:36px;padding:60px 24px;}
+  .stat{border-right:none!important;padding:0;}
+  .timeline{padding-left:48px;}
+  .price-grid{grid-template-columns:1fr;gap:16px;}
+  .founder{padding:80px 24px;}
+  .founder-inner{grid-template-columns:1fr;gap:36px;}
+  .founder-visual{aspect-ratio:3/4;max-width:340px;margin:0 auto;}
+  .tc{width:calc(85vw - 48px);}
+  .faq-list{max-width:100%;}
+  .cta-final{padding:100px 24px;}
+  footer{padding:28px 24px;flex-direction:column;gap:10px;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="sky-bg"></canvas>
+
+<nav class="nav">
+  <a href="#" class="logo">Nur<b>Clips</b></a>
+  <div class="nav-links">
+    <a href="#how" class="nav-link">Comment ça marche</a>
+    <a href="#process" class="nav-link">Collaboration</a>
+    <a href="#pricing" class="nav-link">Tarifs</a>
+    <a href="#faq" class="nav-link">FAQ</a>
+  </div>
+  <a href="#pricing" class="nav-btn">Démarrer →</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <canvas id="star-canvas"></canvas>
+  <div class="hero-glow"></div>
+  <div class="hero-pill"><span class="pill-dot"></span>Clipping pour créateurs Islam × Business</div>
+  <h1>Deviens la <i>référence.</i></h1>
+  <p class="hero-sub">Pas juste des vues. Une autorité.</p>
+  <p class="hero-desc">Ton message a de la valeur. Mais s'il reste invisible, il n'existe pas. On transforme tes vidéos en clips TikTok publiés chaque jour — pour que ta voix devienne incontournable dans ta niche.</p>
+  <div class="hero-actions">
+    <a href="#pricing" class="btn-main">Rends ta voix visible</a>
+    <span class="hero-note">Sans engagement · Premiers clips sous 5 jours</span>
+  </div>
+</section>
+
+<!-- ═══ TICKER ═══ -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="t">Ta voix, chaque jour<span class="tgem">✦</span></span>
+    <span class="t">Spécialiste Islam × Business<span class="tgem">✦</span></span>
+    <span class="t">30 clips par mois<span class="tgem">✦</span></span>
+    <span class="t">Présence quotidienne<span class="tgem">✦</span></span>
+    <span class="t">Ton compte · ta propriété<span class="tgem">✦</span></span>
+    <span class="t">Deviens une référence<span class="tgem">✦</span></span>
+    <span class="t">Dès 200€/mois<span class="tgem">✦</span></span>
+    <span class="t">Ta voix, chaque jour<span class="tgem">✦</span></span>
+    <span class="t">Spécialiste Islam × Business<span class="tgem">✦</span></span>
+    <span class="t">30 clips par mois<span class="tgem">✦</span></span>
+    <span class="t">Présence quotidienne<span class="tgem">✦</span></span>
+    <span class="t">Ton compte · ta propriété<span class="tgem">✦</span></span>
+    <span class="t">Deviens une référence<span class="tgem">✦</span></span>
+    <span class="t">Dès 200€/mois<span class="tgem">✦</span></span>
+  </div>
+</div>
+
+<!-- ═══ STATS ═══ -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-n" data-target="30" data-suffix="+">0</div><div class="stat-l">occasions d'être vu<br>chaque mois</div></div>
+    <div class="stat"><div class="stat-n" data-val="1/j">1/j</div><div class="stat-l">présence sur ton fil<br>chaque jour</div></div>
+    <div class="stat"><div class="stat-n" data-val="0h">0h</div><div class="stat-l">de travail<br>de ton côté</div></div>
+    <div class="stat"><div class="stat-n" data-target="200" data-prefix="€" data-suffix="">0</div><div class="stat-l">pour démarrer<br>sans engagement</div></div>
+  </div>
+</div>
+
+<!-- ═══ PROBLEM ═══ -->
+<section class="s s-air">
+  <div class="problem-grid">
+    <div class="problem-head">
+      <div class="stag reveal">La vérité qui dérange</div>
+      <h2 class="reveal">Tu as l'expertise.<br>Mais personne <i>ne te voit.</i></h2>
+      <p class="problem-intro reveal">Trois réalités que vivent les créateurs de ta niche — et que personne ne dit à voix haute.</p>
+    </div>
+    <div class="problem-body">
+      <div class="pain-list reveal">
+        <div class="pain-item">
+          <span class="pain-n">01</span>
+          <div class="pain-body">
+            <p class="pain-txt">Des créateurs <strong>moins compétents que toi</strong> deviennent des références — juste parce qu'ils sont partout sur TikTok et toi non.</p>
+            <div class="pain-bar-wrap"><div class="pain-bar"></div></div>
+          </div>
+          <span class="pain-arr">↗</span>
+        </div>
+        <div class="pain-item">
+          <span class="pain-n">02</span>
+          <div class="pain-body">
+            <p class="pain-txt">Ton meilleur contenu reste <strong>enfermé dans une vidéo d'une heure</strong> que presque personne ne regarde jusqu'au bout.</p>
+            <div class="pain-bar-wrap"><div class="pain-bar"></div></div>
+          </div>
+          <span class="pain-arr">↗</span>
+        </div>
+        <div class="pain-item">
+          <span class="pain-n">03</span>
+          <div class="pain-body">
+            <p class="pain-txt">Chaque jour sans présence sur TikTok, c'est <strong>une audience que tu laisses à tes concurrents</strong> — et qui ne reviendra pas.</p>
+            <div class="pain-bar-wrap"><div class="pain-bar"></div></div>
+          </div>
+          <span class="pain-arr">↗</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="answer reveal">
+    <p class="answer-txt">L'autorité ne vient pas du talent seul.<br>Elle vient de la <strong>visibilité répétée.</strong> C'est exactement ce qu'on construit pour toi.</p>
+  </div>
+</section>
+
+<div class="sdiv"><hr class="rule"></div>
+
+<!-- ═══ HOW — timeline ═══ -->
+<section class="s" id="how">
+  <div class="how-grid">
+    <div class="how-head">
+      <div class="stag reveal">Comment on te rend visible</div>
+      <h2 class="reveal">Ton effort ?<br><i>Aucun.</i></h2>
+      <p class="how-intro reveal">Tu continues à créer comme d'habitude. On s'occupe de tout le reste — du repérage à la publication.</p>
+    </div>
+    <div class="timeline">
+    <div class="tl-line" id="tl-line"></div>
+    <div class="tl-step">
+      <div class="tl-dot"></div>
+      <div class="tl-lbl">Étape 1 — Nous</div>
+      <div class="tl-title">On analyse ton contenu existant</div>
+      <p class="tl-desc">Tu n'as même pas à nous envoyer quoi que ce soit. On épluche tes vidéos YouTube, podcasts, conférences et lives pour identifier les pépites que ton audience attend.</p>
+    </div>
+    <div class="tl-step">
+      <div class="tl-dot"></div>
+      <div class="tl-lbl">Étape 2 — Nous</div>
+      <div class="tl-title">On extrait ce qui fait autorité</div>
+      <p class="tl-desc">On isole les moments où ton expertise frappe le plus fort. Montage 9:16, sous-titres qui retiennent, accroches pensées pour ta niche islam × business. Chaque clip est conçu pour asseoir ta crédibilité.</p>
+    </div>
+    <div class="tl-step">
+      <div class="tl-dot"></div>
+      <div class="tl-lbl">Chaque jour — Ton TikTok</div>
+      <div class="tl-title">Tu deviens incontournable</div>
+      <p class="tl-desc">Un clip publié chaque jour sur ton compte. Ta voix devient familière, ta présence s'impose, ton autorité grandit. Rapport mensuel inclus pour suivre ta montée en puissance.</p>
+    </div>
+  </div>
+  </div>
+</section>
+
+<div class="sdiv"><hr class="rule"></div>
+
+<!-- ═══ FOUNDER ═══ -->
+<section class="founder">
+  <div class="founder-inner">
+    <div class="founder-visual reveal">
+      <img class="founder-portrait" src="yanis-fondateur.jpg" alt="Yanis, fondateur de NurClips, contemplant une ville illuminée la nuit">
+      <div class="founder-glow"></div>
+      <div class="founder-caption">
+        <div class="founder-name">Yanis</div>
+        <div class="founder-role">Fondateur de NurClips</div>
+      </div>
+    </div>
+
+    <div class="founder-text">
+      <div class="stag reveal">L'histoire derrière NurClips</div>
+      <p class="founder-quote reveal">"J'ai vu trop de créateurs avec un message puissant rester <span class="hl">invisibles.</span> J'ai décidé d'y remédier."</p>
+      <p class="founder-body reveal">Je m'appelle Yanis. Jeune entrepreneur musulman, j'ai grandi en voyant des coachs, des formateurs et des prédicateurs porter des messages qui peuvent vraiment changer des vies — sur le business halal, l'investissement, l'entrepreneuriat guidé par la foi.</p>
+      <p class="founder-body reveal">Mais j'ai aussi vu la frustration : un contenu de grande valeur, enfermé dans des vidéos longues que peu de gens regardent, pendant que des voix moins pertinentes occupaient tout l'espace sur TikTok. <strong>Le talent était là. La visibilité manquait.</strong></p>
+      <p class="founder-body reveal">J'ai créé NurClips pour ça : donner à notre communauté de créateurs les moyens de se faire entendre, de développer leur business et d'asseoir leur autorité — sans avoir à devenir monteurs vidéo. Ton rôle, c'est de transmettre. Le nôtre, c'est de te rendre visible.</p>
+      <div class="founder-sign reveal">
+        <span class="founder-sign-mark">— Yanis</span>
+        <span class="founder-sign-text"><b>NurClips</b>Au service des créateurs Islam × Business</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sdiv"><hr class="rule"></div>
+
+<!-- ═══ PRICING ═══ -->
+<section class="s" id="pricing">
+  <div class="stag reveal">Investis dans ta visibilité</div>
+  <h2 class="reveal">Clair. <i>Prévisible.</i></h2>
+  <div class="price-grid reveal">
+    <div class="pc" id="pc1">
+      <div class="pc-plan">Émergence</div>
+      <div class="pc-amt"><sup>€</sup>200</div>
+      <div class="pc-per">par mois · sans engagement</div>
+      <p class="pc-tag">Pour installer ta présence et commencer à te faire connaître.</p>
+      <ul class="fl">
+        <li><strong>1 compte TikTok</strong> géré</li>
+        <li><strong>30 clips</strong> par mois</li>
+        <li>1 publication par jour</li>
+        <li>Sous-titres + captions + hashtags</li>
+        <li>Rapport mensuel de performance</li>
+      </ul>
+      <button type="button" class="pbtn pbtn-dim" onclick="openForm('Émergence — 200€/mois')">Choisir Émergence</button>
+    </div>
+    <div class="pc glow" id="pc2">
+      <div class="pc-plan">Omniprésence — Le plus choisi</div>
+      <div class="pc-amt"><sup>€</sup>400</div>
+      <div class="pc-per">par mois · sans engagement</div>
+      <p class="pc-tag">Pour dominer ta niche sur plusieurs fronts à la fois.</p>
+      <ul class="fl">
+        <li><strong>3 comptes TikTok</strong> gérés</li>
+        <li><strong>2 clips par jour</strong> sur chaque compte</li>
+        <li>Angles de contenu <strong>différenciés</strong></li>
+        <li>Rapport <strong>hebdomadaire</strong></li>
+        <li>Appel stratégie <strong>mensuel inclus</strong></li>
+      </ul>
+      <button type="button" class="pbtn pbtn-gold" onclick="openForm('Omniprésence — 400€/mois')">Choisir Omniprésence</button>
+    </div>
+  </div>
+</section>
+
+<div class="sdiv"><hr class="rule"></div>
+
+<!-- ═══ PROCESS ═══ -->
+<section class="s" id="process">
+  <div class="stag reveal">Comment nous collaborons</div>
+  <h2 class="reveal">De ton choix au<br>premier clip, <i>en 5 étapes.</i></h2>
+  <div class="process-steps reveal">
+    <div class="process-line"></div>
+    <div class="proc">
+      <div class="proc-num">1</div>
+      <span class="proc-ico">✦</span>
+      <div class="proc-title">Tu choisis ton offre</div>
+      <p class="proc-desc">Émergence ou Omniprésence, selon ton ambition de visibilité.</p>
+    </div>
+    <div class="proc">
+      <div class="proc-num">2</div>
+      <span class="proc-ico">✦</span>
+      <div class="proc-title">Tu remplis le formulaire</div>
+      <p class="proc-desc">Quelques questions pour comprendre ton univers et tes objectifs.</p>
+    </div>
+    <div class="proc">
+      <div class="proc-num">3</div>
+      <span class="proc-ico">✦</span>
+      <div class="proc-title">On échange par message</div>
+      <p class="proc-desc">Je te contacte directement pour valider les détails ensemble.</p>
+    </div>
+    <div class="proc">
+      <div class="proc-num">4</div>
+      <span class="proc-ico">✦</span>
+      <div class="proc-title">Appel d'onboarding</div>
+      <p class="proc-desc">Un rendez-vous téléphonique pour caler la stratégie et les accès.</p>
+    </div>
+    <div class="proc">
+      <div class="proc-num">5</div>
+      <span class="proc-ico">✦</span>
+      <div class="proc-title">La collaboration débute</div>
+      <p class="proc-desc">On t'active ton abonnement et tes premiers clips arrivent.</p>
+    </div>
+  </div>
+</section>
+
+<div class="sdiv"><hr class="rule"></div>
+
+<!-- ═══ FAQ ═══ -->
+<section class="s" id="faq">
+  <div class="stag reveal">Avant de te lancer</div>
+  <h2 class="reveal">Ce que tu<br><i>te demandes.</i></h2>
+  <div class="faq-list reveal">
+    <div class="faq-item open">
+      <button class="faq-btn"><span class="faq-q">Je garde la propriété de mon compte TikTok ?</span><span class="faq-icon">+</span></button>
+      <div class="faq-body" style="max-height:200px"><p class="faq-a">Absolument. NurClips publie sur ton compte existant — tu restes propriétaire à 100%. Tes abonnés, tes données, ton contenu t'appartiennent entièrement. Tu peux arrêter quand tu veux sans rien perdre.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn"><span class="faq-q">Vous comprenez vraiment la niche islam + business ?</span><span class="faq-icon">+</span></button>
+      <div class="faq-body"><p class="faq-a">C'est notre spécialité exclusive. On connaît les codes, le vocabulaire (ribā, halal, barakah, niyyah…), les sujets qui performent et ce qui ne doit jamais être sorti de son contexte. Ton message est entre de bonnes mains.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn"><span class="faq-q">Et si je n'ai pas assez de vidéos longues ?</span><span class="faq-icon">+</span></button>
+      <div class="faq-body"><p class="faq-a">Pour 30 clips/mois, 4 vidéos longues de qualité suffisent — ce que la plupart des créateurs actifs publient déjà. On t'indique si le volume est insuffisant avant de facturer.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn"><span class="faq-q">Y a-t-il un engagement de durée ?</span><span class="faq-icon">+</span></button>
+      <div class="faq-body"><p class="faq-a">Non. Service mensuel renouvelé tacitement. Tu peux arrêter à la fin de n'importe quel mois sans frais ni justification. On mise sur la qualité pour que tu restes.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-btn"><span class="faq-q">Combien de temps avant de voir des résultats ?</span><span class="faq-icon">+</span></button>
+      <div class="faq-body"><p class="faq-a">Tes premiers clips sont publiés dès les premiers jours. Sur TikTok, la régularité est clé : c'est la publication quotidienne sur plusieurs semaines qui construit ta visibilité et ton autorité. Tu suis ta progression grâce au rapport inclus dans ton offre.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FINAL CTA ═══ -->
+<div class="cta-final">
+  <div class="cta-halo"></div>
+  <div class="cta-inner">
+    <div class="stag" style="justify-content:center;margin-bottom:20px;">À toi de jouer</div>
+    <h2>La place de référence<br><i>est encore libre.</i></h2>
+    <p class="cta-sub">Quelqu'un va l'occuper dans ta niche. Autant que ce soit toi.</p>
+    <button type="button" class="btn-main" style="font-size:17px;padding:20px 56px;" onclick="openForm('')">Deviens la référence →</button>
+    <br>
+    <div class="guarantee"><strong>✦</strong> Sans engagement · Ton compte reste le tien · Résiliable à tout moment</div>
+  </div>
+</div>
+
+<footer>
+  <a href="#" class="flogo">Nur<b>Clips</b></a>
+  <div class="footer-legal">
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="cgv.html">CGV</a>
+    <a href="confidentialite.html">Confidentialité</a>
+  </div>
+  <span class="fcopy">© 2025 NurClips</span>
+</footer>
+
+<!-- ═══ MODAL FORM ═══ -->
+<div class="modal-overlay" id="formModal">
+  <div class="modal">
+    <div class="modal-glow"></div>
+    <button type="button" class="modal-close" onclick="closeForm()" aria-label="Fermer">✕</button>
+
+    <div class="modal-form" id="modalForm">
+      <div class="modal-eyebrow">Demande de collaboration</div>
+      <h2 class="modal-title">Commençons à <i>te rendre visible.</i></h2>
+      <p class="modal-sub">Remplis ce formulaire — je te recontacte personnellement sous 24h pour lancer ta collaboration.</p>
+
+      <!-- IMPORTANT : remplace l'URL ci-dessous par ton endpoint Formspree -->
+      <form action="https://formspree.io/f/TON_ID_FORMSPREE" method="POST" id="leadForm">
+        <div class="field">
+          <label>Offre choisie</label>
+          <select name="offre" id="offreField">
+            <option value="Émergence — 200€/mois">Émergence — 200€/mois</option>
+            <option value="Omniprésence — 400€/mois">Omniprésence — 400€/mois</option>
+            <option value="Je ne sais pas encore">Je ne sais pas encore</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Nom complet <span class="req">*</span></label>
+          <input type="text" name="nom" required placeholder="Ton nom et prénom">
+        </div>
+        <div class="field">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" name="email" required placeholder="ton@email.com">
+        </div>
+        <div class="field">
+          <label>Téléphone <span class="req">*</span></label>
+          <input type="tel" name="telephone" required placeholder="06 00 00 00 00">
+        </div>
+        <div class="field">
+          <label>Lien de ta chaîne / podcast</label>
+          <input type="url" name="lien_chaine" placeholder="https://youtube.com/@tachaine">
+        </div>
+        <div class="field">
+          <label>Ton message / tes objectifs</label>
+          <textarea name="message" placeholder="Parle-moi de ton contenu et de ce que tu veux accomplir..."></textarea>
+        </div>
+        <div class="field" style="margin-top:4px;">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-weight:400;line-height:1.5;">
+            <input type="checkbox" name="consentement" required style="width:auto;margin-top:3px;flex-shrink:0;accent-color:#D4B36A;">
+            <span style="font-size:12px;color:var(--dim);">J'accepte que mes données soient utilisées par NurClips pour être recontacté concernant ma demande. <span class="req">*</span></span>
+          </label>
+        </div>
+        <button type="submit" class="modal-submit">Envoyer ma demande</button>
+        <p class="modal-note">✦ Réponse personnelle sous 24h · Aucun engagement</p>
+      </form>
+    </div>
+
+    <div class="modal-success" id="modalSuccess">
+      <div class="modal-success-icon">✦</div>
+      <h3>Demande envoyée !</h3>
+      <p>Merci pour ta confiance. Je reviens vers toi personnellement sous 24h pour démarrer ta collaboration. À très vite.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── MODAL FORM ── */
+function openForm(offre){
+  const modal=document.getElementById('formModal');
+  const sel=document.getElementById('offreField');
+  if(offre && sel){
+    for(const opt of sel.options){ if(opt.value===offre){ sel.value=offre; break; } }
+  }
+  document.getElementById('modalForm').classList.remove('hide');
+  document.getElementById('modalSuccess').classList.remove('show');
+  modal.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeForm(){
+  document.getElementById('formModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('formModal').addEventListener('click',e=>{
+  if(e.target.id==='formModal')closeForm();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeForm();});
+
+document.getElementById('leadForm').addEventListener('submit',function(e){
+  const action=this.getAttribute('action');
+  // If Formspree not yet configured, prevent submit and show a reminder
+  if(action.includes('TON_ID_FORMSPREE')){
+    e.preventDefault();
+    alert('⚠️ Formulaire à connecter : remplace TON_ID_FORMSPREE par ton vrai identifiant Formspree dans le code.');
+    return;
+  }
+  e.preventDefault();
+  const data=new FormData(this);
+  fetch(action,{method:'POST',body:data,headers:{'Accept':'application/json'}})
+    .then(r=>{
+      if(r.ok){
+        document.getElementById('modalForm').classList.add('hide');
+        document.getElementById('modalSuccess').classList.add('show');
+        this.reset();
+      } else { alert('Une erreur est survenue. Réessaie ou contacte-moi directement.'); }
+    })
+    .catch(()=>alert('Une erreur est survenue. Vérifie ta connexion.'));
+});
+</script>
+
+<script>
+/* ── SCROLL REVEAL ── */
+(function(){
+  const els=document.querySelectorAll('.reveal');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}
+    });
+  },{threshold:.15,rootMargin:'0px 0px -8% 0px'});
+  els.forEach(el=>obs.observe(el));
+})();
+
+/* ── FULL-PAGE FAINT STARS ── */
+(function(){
+  const cv=document.getElementById('sky-bg');
+  if(!cv)return;
+  const cx=cv.getContext('2d');
+  let W,H,stars=[];
+  function resize(){
+    W=cv.width=window.innerWidth;
+    H=cv.height=window.innerHeight;
+    build();
+  }
+  function build(){
+    stars=[];
+    const n=Math.round(W*H/9000);
+    for(let i=0;i<n;i++){
+      stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*0.9+0.2,phase:Math.random()*Math.PI*2,speed:0.3+Math.random()*1.0,gold:Math.random()<0.08});
+    }
+  }
+  function draw(ts){
+    const t=ts/1000;
+    cx.clearRect(0,0,W,H);
+    for(const s of stars){
+      const f=0.2+0.6*(0.5+0.5*Math.sin(t*s.speed+s.phase));
+      cx.beginPath();cx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      cx.fillStyle=s.gold?`rgba(212,179,106,${f})`:`rgba(240,238,230,${f*0.8})`;
+      cx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize);
+  resize();
+  requestAnimationFrame(draw);
+})();
+
+/* ── BUTTON MAGNETISM ── */
+(function(){
+  const btns=document.querySelectorAll('.btn-main');
+  btns.forEach(btn=>{
+    btn.addEventListener('mousemove',e=>{
+      const r=btn.getBoundingClientRect();
+      const mx=e.clientX-r.left-r.width/2;
+      const my=e.clientY-r.top-r.height/2;
+      btn.style.transform=`translate(${mx*0.12}px,${my*0.18 - 2}px)`;
+    });
+    btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
+  });
+})();
+
+/* ── STARS ── */
+(function(){
+  const cv = document.getElementById('star-canvas');
+  const cx = cv.getContext('2d');
+  let W,H,stars=[];
+  function resize(){
+    const r=cv.parentElement.getBoundingClientRect();
+    W=cv.width=r.width||window.innerWidth;
+    H=cv.height=r.height||window.innerHeight;
+    build();
+  }
+  function build(){
+    stars=[];
+    const n=Math.round(W*H/2000);
+    for(let i=0;i<n;i++){
+      const tier=Math.random();
+      stars.push({
+        x:Math.random()*W,y:Math.random()*H,
+        size:tier<.55?.4+Math.random()*.6:tier<.82?1+Math.random()*.9:tier<.96?1.9+Math.random()*1.1:3+Math.random()*1.8,
+        phase:Math.random()*Math.PI*2,
+        speed:.3+Math.random()*1.6,
+        gold:Math.random()<.06,
+        tier:tier<.55?0:tier<.82?1:tier<.96?2:3
+      });
+    }
+  }
+  function star4(x,y,out,inn,a,col){
+    cx.save();cx.globalAlpha=a;cx.fillStyle=col;cx.beginPath();
+    for(let p=0;p<8;p++){
+      const ang=(p*Math.PI/4)-Math.PI/2;
+      const r=p%2===0?out:inn;
+      const px=x+Math.cos(ang)*r,py=y+Math.sin(ang)*r;
+      p===0?cx.moveTo(px,py):cx.lineTo(px,py);
+    }
+    cx.closePath();cx.fill();cx.restore();
+  }
+  function cross(x,y,len,a,col,lw){
+    cx.save();cx.globalAlpha=a;cx.strokeStyle=col;cx.lineWidth=lw;cx.lineCap='round';
+    cx.beginPath();cx.moveTo(x-len,y);cx.lineTo(x+len,y);cx.stroke();
+    cx.beginPath();cx.moveTo(x,y-len);cx.lineTo(x,y+len);cx.stroke();
+    cx.restore();
+  }
+  function draw(ts){
+    const t=ts/1000;
+    cx.clearRect(0,0,W,H);
+    for(const s of stars){
+      const f=.25+.75*(.5+.5*Math.sin(t*s.speed+s.phase));
+      const {x,y,size:sz,tier,gold}=s;
+      if(gold){
+        if(tier<=1){
+          cx.save();cx.globalAlpha=f*.9;cx.fillStyle='rgba(220,175,72,1)';
+          cx.beginPath();cx.arc(x,y,sz*.55,0,Math.PI*2);cx.fill();cx.restore();
+        } else {
+          const g=cx.createRadialGradient(x,y,0,x,y,sz*5);
+          g.addColorStop(0,`rgba(200,164,90,${f*.2})`);g.addColorStop(1,'rgba(200,164,90,0)');
+          cx.save();cx.fillStyle=g;cx.beginPath();cx.arc(x,y,sz*5,0,Math.PI*2);cx.fill();cx.restore();
+          star4(x,y,sz,sz*.28,f,'rgba(235,195,80,1)');
+          cross(x,y,sz*(tier===3?8:4.5),f*.5,'rgba(220,180,72,1)',.5);
+        }
+      } else {
+        const b=Math.round(195+60*f);
+        const col=`rgba(${b},${b},${Math.round(b*.94)},1)`;
+        if(tier===0){
+          cx.save();cx.globalAlpha=f*.75;cx.fillStyle=col;cx.beginPath();cx.arc(x,y,sz*.5,0,Math.PI*2);cx.fill();cx.restore();
+        } else if(tier===1){
+          cx.save();cx.globalAlpha=f*.88;cx.fillStyle=col;cx.beginPath();cx.arc(x,y,sz*.58,0,Math.PI*2);cx.fill();cx.restore();
+          if(f>.6)cross(x,y,sz*2.5,f*.14,col,.35);
+        } else if(tier===2){
+          star4(x,y,sz,sz*.3,f*.92,col);
+          cross(x,y,sz*4.5,f*.28,col,.45);
+        } else {
+          const g=cx.createRadialGradient(x,y,0,x,y,sz*5.5);
+          g.addColorStop(0,`rgba(${b},${b},255,${f*.1})`);g.addColorStop(1,'rgba(180,180,255,0)');
+          cx.save();cx.fillStyle=g;cx.beginPath();cx.arc(x,y,sz*5.5,0,Math.PI*2);cx.fill();cx.restore();
+          star4(x,y,sz,sz*.24,f,col);
+          cross(x,y,sz*10,f*.42,col,.55);
+          cx.save();cx.translate(x,y);cx.rotate(Math.PI/4);cx.translate(-x,-y);
+          cross(x,y,sz*5.5,f*.16,col,.35);cx.restore();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize);
+  setTimeout(resize,60);
+  requestAnimationFrame(draw);
+})();
+
+/* ── STAT COUNTERS ── */
+(function(){
+  const els=document.querySelectorAll('.stat-n[data-target]');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting)return;
+      const el=e.target;
+      const target=+el.dataset.target;
+      const prefix=el.dataset.prefix||'';
+      const suffix=el.dataset.suffix!==undefined?el.dataset.suffix:'';
+      let start=null;
+      const dur=1400;
+      function step(ts){
+        if(!start)start=ts;
+        const prog=Math.min((ts-start)/dur,1);
+        const ease=1-Math.pow(1-prog,3);
+        el.textContent=prefix+Math.round(ease*target)+suffix;
+        if(prog<1)requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      obs.unobserve(el);
+    });
+  },{threshold:.5});
+  els.forEach(el=>obs.observe(el));
+})();
+
+/* ── TIMELINE ── */
+(function(){
+  const line=document.getElementById('tl-line');
+  const steps=document.querySelectorAll('.tl-step');
+  if(!line)return;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('lit');
+        const lit=[...steps].filter(s=>s.classList.contains('lit')).length;
+        const total=steps.length;
+        line.style.height=`${Math.min((lit/total)*100,100)}%`;
+      }
+    });
+  },{threshold:.4});
+  steps.forEach(s=>obs.observe(s));
+})();
+
+/* ── PROCESS STEPS LIGHT UP ── */
+(function(){
+  const procs=document.querySelectorAll('.proc');
+  if(!procs.length)return;
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        const idx=[...procs].indexOf(e.target);
+        setTimeout(()=>e.target.classList.add('lit'),idx*140);
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:.5});
+  procs.forEach(p=>obs.observe(p));
+})();
+
+/* ── PRICING MOUSE GLOW ── */
+(function(){
+  document.querySelectorAll('.pc').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+      card.style.setProperty('--my',(e.clientY-r.top)+'px');
+    });
+  });
+})();
+
+/* ── FAQ ACCORDION ── */
+(function(){
+  document.querySelectorAll('.faq-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const item=btn.parentElement;
+      const body=item.querySelector('.faq-body');
+      const isOpen=item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>{
+        i.classList.remove('open');
+        i.querySelector('.faq-body').style.maxHeight='0';
+      });
+      if(!isOpen){
+        item.classList.add('open');
+        body.style.maxHeight=body.scrollHeight+32+'px';
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

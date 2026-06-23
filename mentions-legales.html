@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentions légales — NurClips</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06060a;--gold:#D4B36A;--white:#F2EEE6;
+  --dim:rgba(242,238,230,0.68);--dim2:rgba(242,238,230,0.55);
+  --faint:rgba(242,238,230,0.10);--todo:rgba(212,179,106,0.12);
+}
+body{background:var(--bg);color:var(--white);font-family:'Syne',sans-serif;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+.nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:20px 64px;background:rgba(6,6,10,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--faint);}
+.logo{font-size:17px;font-weight:800;color:var(--white);text-decoration:none;letter-spacing:-.2px;}
+.logo b{color:var(--gold);}
+.back{font-size:13px;font-weight:600;color:var(--dim);text-decoration:none;transition:color .2s;}
+.back:hover{color:var(--gold);}
+.wrap{max-width:760px;margin:0 auto;padding:80px 32px 120px;}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--gold);}
+h1{font-family:'Syne',sans-serif;font-size:clamp(36px,6vw,56px);font-weight:800;letter-spacing:-2px;line-height:1.05;margin-bottom:16px;}
+h1 i{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--gold);}
+.updated{font-size:13px;color:var(--dim2);margin-bottom:56px;}
+h2{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.4px;margin:44px 0 16px;color:var(--white);}
+h2:first-of-type{margin-top:0;}
+p{color:var(--dim);margin-bottom:14px;}
+strong{color:var(--white);font-weight:600;}
+.todo{background:var(--todo);border:1px dashed rgba(212,179,106,0.4);border-radius:8px;padding:3px 10px;color:var(--gold);font-size:14px;font-weight:600;font-family:'Syne',sans-serif;display:inline-block;}
+.note{background:rgba(242,238,230,0.04);border:1px solid var(--faint);border-radius:12px;padding:20px 24px;margin:40px 0;font-size:14px;color:var(--dim2);line-height:1.65;}
+.note strong{color:var(--gold);}
+footer{border-top:1px solid var(--faint);padding:34px 64px;text-align:center;}
+.fcopy{font-size:11px;color:rgba(242,238,230,.25);}
+@media(max-width:700px){.nav{padding:16px 24px;}.wrap{padding:60px 24px 80px;}footer{padding:28px 24px;}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a href="index.html" class="logo">Nur<b>Clips</b></a>
+  <a href="index.html" class="back">← Retour au site</a>
+</nav>
+
+<div class="wrap">
+  <div class="eyebrow">Informations légales</div>
+  <h1>Mentions <i>légales</i></h1>
+  <p class="updated">Dernière mise à jour : <span class="todo">[DATE]</span></p>
+
+  <div class="note">
+    <strong>⚠️ À compléter avant mise en ligne.</strong> Cette page est une trame. Remplace chaque champ <span class="todo">[ENTRE CROCHETS]</span> par tes informations réelles une fois ta structure juridique créée (SIRET obtenu). Les mentions légales sont obligatoires pour tout site professionnel en France.
+  </div>
+
+  <h2>Éditeur du site</h2>
+  <p>Le site NurClips est édité par :</p>
+  <p>
+    <strong>Nom / Dénomination :</strong> <span class="todo">[Yanis NOM ou nom de la structure]</span><br>
+    <strong>Statut juridique :</strong> <span class="todo">[Micro-entreprise / EI / SASU / EURL...]</span><br>
+    <strong>Adresse :</strong> <span class="todo">[adresse complète]</span><br>
+    <strong>SIRET :</strong> <span class="todo">[numéro SIRET]</span><br>
+    <strong>Numéro de TVA intracommunautaire :</strong> <span class="todo">[le cas échéant — sinon "non applicable, art. 293 B du CGI"]</span><br>
+    <strong>Email :</strong> <span class="todo">[contact@nurclips.com]</span><br>
+    <strong>Téléphone :</strong> <span class="todo">[numéro]</span>
+  </p>
+
+  <h2>Directeur de la publication</h2>
+  <p><span class="todo">[Yanis NOM]</span>, en qualité de <span class="todo">[fondateur / gérant]</span>.</p>
+
+  <h2>Hébergement</h2>
+  <p>Le site est hébergé par :</p>
+  <p>
+    <strong>Hébergeur :</strong> <span class="todo">[ex : Vercel Inc. / OVH / Hostinger...]</span><br>
+    <strong>Adresse :</strong> <span class="todo">[adresse de l'hébergeur]</span><br>
+    <strong>Contact :</strong> <span class="todo">[site ou email de l'hébergeur]</span>
+  </p>
+
+  <h2>Propriété intellectuelle</h2>
+  <p>L'ensemble des contenus présents sur ce site (textes, visuels, logo, charte graphique) sont la propriété de NurClips, sauf mention contraire. Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation préalable, est interdite et constitue une contrefaçon.</p>
+
+  <h2>Responsabilité</h2>
+  <p>NurClips s'efforce d'assurer l'exactitude des informations diffusées sur ce site, mais ne peut garantir l'absence d'erreurs. Les informations sont fournies à titre indicatif et sont susceptibles d'évoluer.</p>
+
+  <h2>Contact</h2>
+  <p>Pour toute question relative au site, vous pouvez nous contacter à l'adresse : <span class="todo">[contact@nurclips.com]</span>.</p>
+</div>
+
+<footer>
+  <span class="fcopy">© 2025 NurClips</span>
+</footer>
+</body>
+</html>

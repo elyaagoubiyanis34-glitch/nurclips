@@ -413,6 +413,54 @@ h2 i{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;colo
 .founder-sign-text{font-size:13px;color:var(--dim2);line-height:1.4;}
 .founder-sign-text b{color:var(--white);font-weight:600;display:block;font-family:'Syne',sans-serif;font-size:14px;}
 
+/* ─── STRATÉGIE NUR ─── */
+.nur-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  margin-top:56px;
+}
+.nur-card{
+  background:var(--faint2);border:0.5px solid var(--faint);
+  border-radius:var(--r-md);padding:24px 26px;
+  display:flex;align-items:flex-start;gap:16px;
+  transition:border-color .25s,background .25s;
+  position:relative;overflow:hidden;
+}
+.nur-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(212,179,106,0.05),transparent 60%);
+  opacity:0;transition:opacity .25s;
+}
+.nur-card:hover{border-color:rgba(212,179,106,0.3);}
+.nur-card:hover::before{opacity:1;}
+.nur-num{
+  font-family:'Syne',sans-serif;
+  font-size:13px;font-weight:800;
+  color:var(--gold);opacity:.7;
+  flex-shrink:0;margin-top:2px;
+  letter-spacing:.05em;
+}
+.nur-title{
+  font-size:15px;font-weight:600;
+  color:var(--white);margin-bottom:6px;line-height:1.3;letter-spacing:-.2px;
+}
+.nur-desc{font-size:13px;color:var(--dim);line-height:1.6;}
+.nur-bottom{
+  margin-top:40px;
+  background:linear-gradient(135deg,rgba(212,179,106,0.08),rgba(212,179,106,0.03));
+  border:1px solid rgba(212,179,106,0.2);
+  border-radius:var(--r-md);padding:28px 32px;
+  display:flex;align-items:center;gap:20px;
+}
+.nur-bottom-icon{
+  font-size:28px;color:var(--gold);flex-shrink:0;
+  font-family:'Instrument Serif',serif;font-style:italic;
+}
+.nur-bottom-text{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:17px;color:var(--white);line-height:1.5;
+}
+.nur-bottom-text strong{font-style:normal;color:var(--gold);}
+
 /* ─── PROCESS / COLLAB ─── */
 .process-steps{
   display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:64px;
@@ -557,6 +605,8 @@ footer{
   .s{padding:80px 24px;}
   .s-air{padding-top:90px;padding-bottom:90px;}
   .problem-grid,.how-grid{grid-template-columns:1fr;gap:40px;}
+  .nur-grid{grid-template-columns:1fr;}
+  .nur-bottom{flex-direction:column;gap:12px;padding:24px;}
   .process-steps{grid-template-columns:1fr;gap:32px;}
   .process-line{display:none;}
   .proc{display:grid;grid-template-columns:46px 1fr;gap:18px;text-align:left;align-items:start;}
@@ -586,6 +636,7 @@ footer{
 <nav class="nav">
   <a href="#" class="logo">Nur<b>Clips</b></a>
   <div class="nav-links">
+    <a href="#nur" class="nav-link">Pour qui ?</a>
     <a href="#how" class="nav-link">Comment ça marche</a>
     <a href="#process" class="nav-link">Collaboration</a>
     <a href="#pricing" class="nav-link">Tarifs</a>
@@ -677,6 +728,62 @@ footer{
   </div>
   <div class="answer reveal">
     <p class="answer-txt">L'autorité ne vient pas du talent seul.<br>Elle vient de la <strong>visibilité répétée.</strong> C'est exactement ce qu'on construit pour toi.</p>
+  </div>
+</section>
+
+<div class="sdiv"><hr class="rule"></div>
+
+<!-- ═══ STRATÉGIE NUR ═══ -->
+<section class="s" id="nur">
+  <div class="stag reveal">Pour qui ?</div>
+  <h2 class="reveal">La stratégie Nur<br>est faite pour toi <i>si...</i></h2>
+  <div class="nur-grid">
+    <div class="nur-card reveal">
+      <span class="nur-num">01</span>
+      <div>
+        <div class="nur-title">Tu crées du contenu long format</div>
+        <p class="nur-desc">Au moins une vidéo par mois — YouTube, podcast, conférence filmée, live. C'est ta matière première, on s'occupe du reste.</p>
+      </div>
+    </div>
+    <div class="nur-card reveal">
+      <span class="nur-num">02</span>
+      <div>
+        <div class="nur-title">Tu es dans la niche islam × business</div>
+        <p class="nur-desc">Coach halal, formateur en investissement, prédicateur, entrepreneur musulman qui partage son expertise. C'est notre spécialité exclusive.</p>
+      </div>
+    </div>
+    <div class="nur-card reveal">
+      <span class="nur-num">03</span>
+      <div>
+        <div class="nur-title">Tu veux être vu partout sans y passer du temps</div>
+        <p class="nur-desc">Tu préfères te concentrer sur ton contenu de fond et laisser la visibilité se construire toute seule autour de toi.</p>
+      </div>
+    </div>
+    <div class="nur-card reveal">
+      <span class="nur-num">04</span>
+      <div>
+        <div class="nur-title">Tu comprends que l'autorité se construit par la répétition</div>
+        <p class="nur-desc">Être vu plusieurs fois, sur plusieurs comptes, par les mêmes personnes — c'est ce qui transforme un créateur en référence incontournable.</p>
+      </div>
+    </div>
+    <div class="nur-card reveal">
+      <span class="nur-num">05</span>
+      <div>
+        <div class="nur-title">Tu veux t'installer dans le subconscient de ta cible</div>
+        <p class="nur-desc">Qu'on pense à toi avant même de chercher. Que ton nom soit le premier qui vient à l'esprit quand quelqu'un cherche une référence dans ta niche.</p>
+      </div>
+    </div>
+    <div class="nur-card reveal">
+      <span class="nur-num">06</span>
+      <div>
+        <div class="nur-title">Tu joues sur le long terme</div>
+        <p class="nur-desc">Tu n'es pas là pour un buzz d'une semaine. Tu construis une autorité durable qui travaille pour toi chaque jour, même quand tu n'es pas là.</p>
+      </div>
+    </div>
+  </div>
+  <div class="nur-bottom reveal">
+    <span class="nur-bottom-icon">✦</span>
+    <p class="nur-bottom-text">NurClips ne gère pas ton compte TikTok personnel — on crée une <strong>présence externe autour de ton contenu.</strong> Les gens te voient partout, validé par la communauté, sans que tu aies à te mettre en avant toi-même.</p>
   </div>
 </section>
 
@@ -871,7 +978,7 @@ footer{
     <a href="cgv.html">CGV</a>
     <a href="confidentialite.html">Confidentialité</a>
   </div>
-  <span class="fcopy">© 2026 NurClips</span>
+  <span class="fcopy">© 2025 NurClips</span>
 </footer>
 
 <!-- ═══ MODAL FORM ═══ -->

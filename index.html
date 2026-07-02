@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NurClips — Éclaire ton audience</title>
@@ -71,9 +67,12 @@ body::after{
   backdrop-filter:blur(20px);
   border-bottom:1px solid var(--faint);
 }
-.logo{font-size:17px;font-weight:800;color:var(--white);text-decoration:none;letter-spacing:-.2px;transition:opacity .2s;}
-.logo b{color:var(--gold);font-weight:800;}
+.logo{text-decoration:none;display:flex;align-items:center;transition:opacity .2s;}
 .logo:hover{opacity:.8;}
+.logo svg{display:block;}
+.flogo{text-decoration:none;display:flex;align-items:center;opacity:.7;transition:opacity .2s;}
+.flogo:hover{opacity:1;}
+.flogo b{color:var(--gold);}
 .nav-links{display:flex;align-items:center;gap:36px;}
 .nav-link{
   font-family:'Syne',sans-serif;font-size:14px;font-weight:600;
@@ -611,11 +610,15 @@ footer{
   .problem-grid,.how-grid{grid-template-columns:1fr;gap:40px;}
   .nur-grid{grid-template-columns:1fr;}
   .nur-bottom{flex-direction:column;gap:12px;padding:24px;}
-  .process-steps{grid-template-columns:1fr;gap:32px;}
+  .process-steps{grid-template-columns:1fr;gap:0;position:relative;}
   .process-line{display:none;}
-  .proc{display:grid;grid-template-columns:46px 1fr;gap:18px;text-align:left;align-items:start;}
-  .proc-num{margin:0;}
+  .proc{display:grid;grid-template-columns:46px 1fr;gap:20px;text-align:left;align-items:start;padding:0 0 28px 0;position:relative;}
+  .proc:last-child{padding-bottom:0;}
+  .proc::before{content:'';position:absolute;left:22.5px;top:52px;bottom:-4px;width:1px;background:var(--faint);z-index:0;}
+  .proc:last-child::before{display:none;}
+  .proc-num{margin:0;position:relative;z-index:1;}
   .proc-ico{display:none;}
+  .proc-title{margin-top:11px;}
   .problem-head,.how-head{position:static;}
   .problem-intro,.how-intro{max-width:100%;}
   .sdiv{padding-left:24px;padding-right:24px;}
@@ -638,7 +641,37 @@ footer{
 <canvas id="sky-bg"></canvas>
 
 <nav class="nav">
-  <a href="#" class="logo">Nur<b>Clips</b></a>
+  <a href="#" class="logo">
+    <svg height="32" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" aria-label="NurClips">
+      <defs>
+        <radialGradient id="lh" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#D4B36A" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#D4B36A" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="800" height="800" fill="transparent"/>
+      <ellipse cx="400" cy="400" rx="320" ry="120" fill="url(#lh)"/>
+      <text x="400" y="430" text-anchor="middle"
+        font-family="Georgia, serif"
+        font-style="italic"
+        font-size="140"
+        font-weight="400"
+        fill="#F2EEE6"
+        letter-spacing="-2">Nur<tspan
+          font-size="54"
+          fill="#D4B36A"
+          dy="-14"
+          dx="10">✦</tspan><tspan
+          font-family="Arial Black, sans-serif"
+          font-style="normal"
+          font-weight="900"
+          font-size="114"
+          fill="#D4B36A"
+          letter-spacing="-2"
+          dy="14"
+          dx="10">Clips</tspan></text>
+    </svg>
+  </a>
   <div class="nav-links">
     <a href="#nur" class="nav-link">Pour qui ?</a>
     <a href="#how" class="nav-link">Comment ça marche</a>
@@ -656,7 +689,7 @@ footer{
   <div class="hero-pill"><span class="pill-dot"></span>Clipping pour créateurs Islam × Business</div>
   <h1>Deviens la <i>référence.</i></h1>
   <p class="hero-sub">Pas juste des vues. Une autorité.</p>
-  <p class="hero-desc">Ton message a de la valeur. Mais s'il reste invisible, il n'existe pas. On transforme tes vidéos en clips TikTok publiés chaque jour pour que ta voix devienne incontournable dans ta niche.</p>
+  <p class="hero-desc">Ton message a de la valeur. Mais s'il reste invisible, il n'existe pas. On transforme tes vidéos en clips TikTok publiés chaque jour — pour que ta voix devienne incontournable dans ta niche.</p>
   <div class="hero-actions">
     <a href="#pricing" class="btn-main">Rends ta voix visible</a>
     <span class="hero-note">Sans engagement · Premiers clips sous 5 jours</span>
@@ -699,14 +732,14 @@ footer{
     <div class="problem-head">
       <div class="stag reveal">La vérité qui dérange</div>
       <h2 class="reveal">Tu as l'expertise.<br>Mais personne <i>ne te voit.</i></h2>
-      <p class="problem-intro reveal">Trois réalités que vivent les créateurs de ta niche et que personne ne dit à voix haute.</p>
+      <p class="problem-intro reveal">Trois réalités que vivent les créateurs de ta niche — et que personne ne dit à voix haute.</p>
     </div>
     <div class="problem-body">
       <div class="pain-list reveal">
         <div class="pain-item">
           <span class="pain-n">01</span>
           <div class="pain-body">
-            <p class="pain-txt">Des créateurs <strong>moins compétents que toi</strong> deviennent des références juste parce qu'ils sont partout sur TikTok et toi non.</p>
+            <p class="pain-txt">Des créateurs <strong>moins compétents que toi</strong> deviennent des références — juste parce qu'ils sont partout sur TikTok et toi non.</p>
             <div class="pain-bar-wrap"><div class="pain-bar"></div></div>
           </div>
           <span class="pain-arr">↗</span>
@@ -722,7 +755,7 @@ footer{
         <div class="pain-item">
           <span class="pain-n">03</span>
           <div class="pain-body">
-            <p class="pain-txt">Chaque jour sans présence sur TikTok, c'est <strong>une audience que tu laisses à tes concurrents</strong> et qui ne reviendra pas.</p>
+            <p class="pain-txt">Chaque jour sans présence sur TikTok, c'est <strong>une audience que tu laisses à tes concurrents</strong> — et qui ne reviendra pas.</p>
             <div class="pain-bar-wrap"><div class="pain-bar"></div></div>
           </div>
           <span class="pain-arr">↗</span>
@@ -746,14 +779,14 @@ footer{
       <span class="nur-num">01</span>
       <div>
         <div class="nur-title">Tu crées du contenu long format</div>
-        <p class="nur-desc">Au moins une vidéo par mois YouTube, podcast, conférence filmée, live. C'est ta matière première, on s'occupe du reste.</p>
+        <p class="nur-desc">Au moins une vidéo par mois — YouTube, podcast, conférence filmée, live. C'est ta matière première, on s'occupe du reste.</p>
       </div>
     </div>
     <div class="nur-card reveal">
       <span class="nur-num">02</span>
       <div>
         <div class="nur-title">Tu es dans la niche islam × business</div>
-        <p class="nur-desc">Coach halal, formateur en investissement, entrepreneur musulman qui partage son expertise. C'est notre spécialité exclusive.</p>
+        <p class="nur-desc">Coach halal, formateur en investissement, prédicateur, entrepreneur musulman qui partage son expertise. C'est notre spécialité exclusive.</p>
       </div>
     </div>
     <div class="nur-card reveal">
@@ -767,7 +800,7 @@ footer{
       <span class="nur-num">04</span>
       <div>
         <div class="nur-title">Tu comprends que l'autorité se construit par la répétition</div>
-        <p class="nur-desc">Être vu plusieurs fois, sur plusieurs comptes, par les mêmes personnes c'est ce qui transforme un créateur en référence incontournable.</p>
+        <p class="nur-desc">Être vu plusieurs fois, sur plusieurs comptes, par les mêmes personnes — c'est ce qui transforme un créateur en référence incontournable.</p>
       </div>
     </div>
     <div class="nur-card reveal">
@@ -787,7 +820,7 @@ footer{
   </div>
   <div class="nur-bottom reveal">
     <span class="nur-bottom-icon">✦</span>
-    <p class="nur-bottom-text">NurClips ne gère pas ton compte TikTok personnel on crée une <strong>présence externe autour de ton contenu.</strong> Les gens te voient partout, validé par la communauté, sans que tu aies à te mettre en avant toi-même.</p>
+    <p class="nur-bottom-text">NurClips ne gère pas ton compte TikTok personnel — on crée une <strong>présence externe autour de ton contenu.</strong> Les gens te voient partout, validé par la communauté, sans que tu aies à te mettre en avant toi-même.</p>
   </div>
 </section>
 
@@ -799,7 +832,7 @@ footer{
     <div class="how-head">
       <div class="stag reveal">Comment on te rend visible</div>
       <h2 class="reveal">Ton effort ?<br><i>Aucun.</i></h2>
-      <p class="how-intro reveal">Tu continues à créer comme d'habitude. On s'occupe de tout le reste du repérage à la publication.</p>
+      <p class="how-intro reveal">Tu continues à créer comme d'habitude. On s'occupe de tout le reste — du repérage à la publication.</p>
     </div>
     <div class="timeline">
     <div class="tl-line" id="tl-line"></div>
@@ -842,9 +875,9 @@ footer{
     <div class="founder-text">
       <div class="stag reveal">L'histoire derrière NurClips</div>
       <p class="founder-quote reveal">"J'ai vu trop de créateurs avec un message puissant rester <span class="hl">invisibles.</span> J'ai décidé d'y remédier."</p>
-      <p class="founder-body reveal">Je m'appelle Yanis. Jeune entrepreneur musulman, j'ai souvent constater que les coachs, les formateurs et les entrpreneur musulman porter des messages qui peuvent vraiment changer des vies sur le business halal, l'investissement, l'entrepreneuriat guidé par la foi.</p>
+      <p class="founder-body reveal">Je m'appelle Yanis. Jeune entrepreneur musulman, j'ai grandi en voyant des coachs, des formateurs et des prédicateurs porter des messages qui peuvent vraiment changer des vies — sur le business halal, l'investissement, l'entrepreneuriat guidé par la foi.</p>
       <p class="founder-body reveal">Mais j'ai aussi vu la frustration : un contenu de grande valeur, enfermé dans des vidéos longues que peu de gens regardent, pendant que des voix moins pertinentes occupaient tout l'espace sur TikTok. <strong>Le talent était là. La visibilité manquait.</strong></p>
-      <p class="founder-body reveal">J'ai créé NurClips pour ça : donner à notre communauté de créateurs les moyens de se faire entendre, de développer leur business et d'asseoir leur autorité sans avoir à devenir monteurs vidéo. Ton rôle, c'est de transmettre. Le nôtre, c'est de te rendre visible.</p>
+      <p class="founder-body reveal">J'ai créé NurClips pour ça : donner à notre communauté de créateurs les moyens de se faire entendre, de développer leur business et d'asseoir leur autorité — sans avoir à devenir monteurs vidéo. Ton rôle, c'est de transmettre. Le nôtre, c'est de te rendre visible.</p>
       <div class="founder-sign reveal">
         <span class="founder-sign-mark">— Yanis</span>
         <span class="founder-sign-text"><b>NurClips</b>Au service des créateurs Islam × Business</span>
@@ -875,7 +908,7 @@ footer{
       <button type="button" class="pbtn pbtn-dim" onclick="openForm('Émergence — 200€/mois')">Choisir Émergence</button>
     </div>
     <div class="pc glow" id="pc2">
-      <div class="pc-plan">Omniprésence — Le plus aventageux</div>
+      <div class="pc-plan">Omniprésence — Le plus choisi</div>
       <div class="pc-amt"><sup>€</sup>400</div>
       <div class="pc-per">par mois · sans engagement</div>
       <p class="pc-tag">Pour dominer ta niche sur plusieurs fronts à la fois.</p>
@@ -883,8 +916,8 @@ footer{
         <li><strong>3 comptes TikTok</strong> gérés</li>
         <li><strong>2 clips par jour</strong> sur chaque compte</li>
         <li>Angles de contenu <strong>différenciés</strong></li>
-        <li>Sous-titres + captions + hashtags</li>
-        <li>Rapport de performance<strong>Mensuel</strong></li>
+        <li>Rapport <strong>hebdomadaire</strong></li>
+        <li>Appel stratégie <strong>mensuel inclus</strong></li>
       </ul>
       <button type="button" class="pbtn pbtn-gold" onclick="openForm('Omniprésence — 400€/mois')">Choisir Omniprésence</button>
     </div>
@@ -941,7 +974,7 @@ footer{
   <div class="faq-list reveal">
     <div class="faq-item open">
       <button class="faq-btn"><span class="faq-q">Je garde la propriété de mon compte TikTok ?</span><span class="faq-icon">+</span></button>
-      <div class="faq-body" style="max-height:200px"><p class="faq-a">Absolument. NurClips publie sur ton compte existant tu restes propriétaire à 100%. Tes abonnés, tes données, ton contenu t'appartiennent entièrement. Tu peux arrêter quand tu veux sans rien perdre.</p></div>
+      <div class="faq-body" style="max-height:200px"><p class="faq-a">Absolument. NurClips publie sur ton compte existant — tu restes propriétaire à 100%. Tes abonnés, tes données, ton contenu t'appartiennent entièrement. Tu peux arrêter quand tu veux sans rien perdre.</p></div>
     </div>
     <div class="faq-item">
       <button class="faq-btn"><span class="faq-q">Vous comprenez vraiment la niche islam + business ?</span><span class="faq-icon">+</span></button>
@@ -949,7 +982,7 @@ footer{
     </div>
     <div class="faq-item">
       <button class="faq-btn"><span class="faq-q">Et si je n'ai pas assez de vidéos longues ?</span><span class="faq-icon">+</span></button>
-      <div class="faq-body"><p class="faq-a">Pour 30 clips/mois, 4 vidéos longues de qualité suffisent ce que la plupart des créateurs actifs publient déjà. On t'indique si le volume est insuffisant avant de facturer.</p></div>
+      <div class="faq-body"><p class="faq-a">Pour 30 clips/mois, 4 vidéos longues de qualité suffisent — ce que la plupart des créateurs actifs publient déjà. On t'indique si le volume est insuffisant avant de facturer.</p></div>
     </div>
     <div class="faq-item">
       <button class="faq-btn"><span class="faq-q">Y a-t-il un engagement de durée ?</span><span class="faq-icon">+</span></button>
@@ -976,13 +1009,36 @@ footer{
 </div>
 
 <footer>
-  <a href="#" class="flogo">Nur<b>Clips</b></a>
+  <a href="#" class="flogo">
+    <svg height="26" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" aria-label="NurClips">
+      <rect width="800" height="800" fill="transparent"/>
+      <text x="400" y="430" text-anchor="middle"
+        font-family="Georgia, serif"
+        font-style="italic"
+        font-size="140"
+        font-weight="400"
+        fill="rgba(242,238,230,0.55)"
+        letter-spacing="-2">Nur<tspan
+          font-size="54"
+          fill="#D4B36A"
+          dy="-14"
+          dx="10">✦</tspan><tspan
+          font-family="Arial Black, sans-serif"
+          font-style="normal"
+          font-weight="900"
+          font-size="114"
+          fill="#D4B36A"
+          letter-spacing="-2"
+          dy="14"
+          dx="10">Clips</tspan></text>
+    </svg>
+  </a>
   <div class="footer-legal">
     <a href="mentions-legales.html">Mentions légales</a>
     <a href="cgv.html">CGV</a>
     <a href="confidentialite.html">Confidentialité</a>
   </div>
-  <span class="fcopy">© 2026 NurClips</span>
+  <span class="fcopy">© 2025 NurClips</span>
 </footer>
 
 <!-- ═══ MODAL FORM ═══ -->
@@ -1007,8 +1063,8 @@ footer{
           </select>
         </div>
         <div class="field">
-          <label>Prénom <span class="req">*</span></label>
-          <input type="text" name="nom" required placeholder="Ton prénom">
+          <label>Nom complet <span class="req">*</span></label>
+          <input type="text" name="nom" required placeholder="Ton nom et prénom">
         </div>
         <div class="field">
           <label>Email <span class="req">*</span></label>
